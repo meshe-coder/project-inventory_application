@@ -1,0 +1,56 @@
+<%
+	const inventory = typeof items !== 'undefined' && Array.isArray(items) ? items : [];
+	const columns = inventory.length > 0 ? Object.keys(inventory[0]) : [];
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Inventory</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<main>
+		<header class="header">
+			<h1>My car Inventory</h1>
+			<p class="subtitle">View and manage your inventory items.</p>
+			<a class="button" href="/create">Add a car part</a>
+		</header>
+
+		<section class="card" aria-labelledby="inventory-heading">
+			<div class="card-heading">
+				<h2 id="inventory-heading">Inventory items</h2>
+			</div>
+
+			<% if (inventory.length === 0) { %>
+				<div class="empty">
+					<strong>No inventory items to show yet</strong>
+					<span>When items are loaded, they will appear here.</span>
+				</div>
+			<% } else { %>
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<% columns.forEach((column) => { %>
+									<th scope="col"><%= column %></th>
+								<% }); %>
+							</tr>
+						</thead>
+						<tbody>
+							<% inventory.forEach((item) => { %>
+								<tr>
+									<% columns.forEach((column) => { %>
+										<td><%= item[column] == null ? '' : item[column] %></td>
+									<% }); %>
+								</tr>
+							<% }); %>
+						</tbody>
+					</table>
+				</div>
+			<% } %>
+		</section>
+	</main>
+</body>
+</html>
